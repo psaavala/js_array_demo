@@ -5,10 +5,7 @@ const numbers = []
 document.querySelector('#add').addEventListener('click', () => {
     const newNumber = parseInt(input.value)
     numbers.push(newNumber)
-    const row = list.insertRow()
-    const col1 = row.insertCell(0)
-
-    col1.innerHTML = newNumber
+    addTableRow(newNumber)
     input.value = ''
 })
 
@@ -29,5 +26,27 @@ document.querySelector('#average').addEventListener('click', () => {
     }
     const average = sum / numbers.length
     alert('Average is ' + average)
-    
+
+})
+
+const deleteRow = (newNumber) => {
+    const index = numbers.indexOf(newNumber)
+    numbers.splice(index,1)
+    list.deleteRow(index)
+}
+
+const addTableRow = (text) => {
+    const row = list.insertRow()
+    const col1 = row.insertCell(0)
+
+    col1.innerHTML= text
+}
+
+document.querySelector('#sort').addEventListener('click', () => {
+    numbers.sort((a,b) => a-b)
+    while (list.rows.length > 0) {
+        list.deleteRow(0)
+    }
+
+    numbers.forEach(newNumber => addTableRow(newNumber))
 })
